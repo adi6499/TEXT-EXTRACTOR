@@ -31,11 +31,6 @@ uploaded_image = st.file_uploader("Upload an Image", type=['jpeg','png','jpg','s
 if uploaded_image is not None:
     try:
         image = Image.open(uploaded_image)
-        
-        # Resize very large images
-        if image.size[0] > 2000 or image.size[1] > 2000:
-            image = image.resize((1500, 1500))
-        
         st.image(image, caption="Uploaded Image", width=True)
         image_np = np.array(image)
         
@@ -47,7 +42,7 @@ if uploaded_image is not None:
         st.success("Extraction complete!")
         
         if results:
-            # Extract just the text, no confidence scores
+            # Extract just the text
             for _, text, _ in results:
                 texts.append(text)
             
@@ -55,7 +50,7 @@ if uploaded_image is not None:
             all_text = "\n".join(texts)
             
             st.subheader("Extracted Text:")
-            st.text_area("Copy your text below:", value=all_text, height=200)
+            st.text_area("Copy your text below:", value=all_text)
 
         else:
             st.warning("No text detected in the image!")
